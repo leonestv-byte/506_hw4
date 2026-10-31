@@ -1,0 +1,46 @@
+---
+title: "HW4"
+author: "Steven Leone"
+format: html
+editor: visual
+---
+
+# Exercise 1) Tidyverse: New Zealand
+
+a)
+
+```{r}
+library(dplyr)
+library(tidyverse)
+library(DBI)
+library(knitr)
+
+data <- readRDS("nzge.rds")
+
+table_data <- data %>% group_by(voting_type, election_year) %>% summarize(total_votes = sum(votes, na.rm = TRUE))
+
+kable(table_data,
+      col.names = c("Voting Type",
+                    "Election Year",
+                    "Total Votes"))
+
+```
+b)
+
+```{r}
+
+data_2014 <- data %>% filter(election_year == 2014, voting_type == "Candidate") %>% group_by(candidate) %>% summarise(votes = sum(votes, na.rm = TRUE), .groups = "drop") %>% mutate(proportion = votes / sum(votes)) %>% select(candidate, proportion)
+
+kable(data_2014,
+      col.names = c("Candidate",
+                    "Proportion"))
+
+```
+
+
+c)
+
+
+
+
+
